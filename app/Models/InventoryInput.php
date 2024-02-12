@@ -12,13 +12,12 @@ use Illuminate\Database\Eloquent\Model;
  * @property $suppliers_id
  * @property $persons_id
  * @property $comments
- * @property $regionals_id
+ * @property $regional
  * @property $created_at
  * @property $updated_at
  *
  * @property Person $person
  * @property ProductsInput[] $productsInputs
- * @property Regional $regional
  * @property Supplier $supplier
  * @package App
  * @mixin \Illuminate\Database\Eloquent\Builder
@@ -30,7 +29,7 @@ class InventoryInput extends Model
 		'date' => 'required',
 		'suppliers_id' => 'required',
 		'persons_id' => 'required',
-		'regionals_id' => 'required',
+		'regional' => 'required',
     ];
 
     protected $perPage = 20;
@@ -40,7 +39,7 @@ class InventoryInput extends Model
      *
      * @var array
      */
-    protected $fillable = ['date','suppliers_id','persons_id','comments','regionals_id'];
+    protected $fillable = ['date','suppliers_id','persons_id','comments','regional'];
 
 
     /**
@@ -57,14 +56,6 @@ class InventoryInput extends Model
     public function productsInputs()
     {
         return $this->hasMany('App\Models\ProductsInput', 'inventory_inputs_id', 'id');
-    }
-    
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasOne
-     */
-    public function regional()
-    {
-        return $this->hasOne('App\Models\Regional', 'id', 'regionals_id');
     }
     
     /**

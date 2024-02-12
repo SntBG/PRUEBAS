@@ -13,7 +13,7 @@
                         <div style="display: flex; justify-content: space-between; align-items: center;">
 
                             <span id="card_title">
-                                {{ __('Product') }}
+                                Articulos
                             </span>
 
                              <div class="float-right">
@@ -36,12 +36,11 @@
                                     <tr>
                                         <th>No</th>
                                         
-										<th>Categories Id</th>
-										<th>Product</th>
-										<th>Suppliers Id</th>
-										<th>Packaging Types Id</th>
-										<th>Minimum Stock</th>
-										<th>State</th>
+										<th>Categoria</th>
+										<th>Producto</th>
+										<th>Proveedor</th>
+										<th>Embalaje</th>
+										<th>Stock Minimo</th>
 
                                         <th></th>
                                     </tr>
@@ -49,14 +48,13 @@
                                 <tbody>
                                     @foreach ($products as $product)
                                         <tr>
-                                            <td>{{ ++$i }}</td>
+                                            <td>{{ $product ->id }}</td>
                                             
 											<td>{{ $product->Category->category }}</td>
 											<td>{{ $product->product }}</td>
 											<td>{{ $product->Supplier->supplier }}</td>
 											<td>{{ $product->PackagingType->type }}</td>
 											<td>{{ $product->minimum_stock }}</td>
-											<td>{{ $product->state }}</td>
 
                                             <td>
                                                 <form action="{{ route('products.destroy',$product->id) }}" method="POST">

@@ -19,7 +19,7 @@ return new class extends Migration
             $table->integer('intputs');
             $table->integer('outputs');
             $table->integer('stock');
-            $table->foreignId('regionals_id')->constrained('regionals')->onUpdate('cascade')->onDelete('cascade');
+            $table->string('regional');
             $table->timestamps();
         });
     }

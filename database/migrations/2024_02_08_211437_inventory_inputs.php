@@ -19,7 +19,7 @@ return new class extends Migration
             $table->foreignId('suppliers_id')->constrained('suppliers')->onUpdate('cascade')->onDelete('cascade');
             $table->foreignId('people_id')->constrained('people')->onUpdate('cascade')->onDelete('cascade');
             $table->string('comments')->nullable();
-            $table->foreignId('regionals_id')->constrained('regionals')->onUpdate('cascade')->onDelete('cascade');
+            $table->string('regional');
             $table->timestamps();
         });
     }
