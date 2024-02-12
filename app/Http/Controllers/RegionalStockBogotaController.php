@@ -6,7 +6,7 @@ use App\Models\RegionalStock;
 use Illuminate\Http\Request;
 use App\Models\Product;
 /**
- * Class RegionalStockController
+ * 
  * @package App\Http\Controllers
  */
 class RegionalStockBogotaController extends Controller
@@ -18,9 +18,10 @@ class RegionalStockBogotaController extends Controller
      */
     public function index()
     {
-        $regionalStocks = RegionalStock::where('regional', '=', 'BOGOTA')->get();
+        $regionalStocks = RegionalStock::paginate();
 
-        return view('regional-stock.regional-bogota.index', compact('regionalStocks'));
+        return view('regional-stock.regional-bogota.index', compact('regionalStocks'))
+            ->with('i', (request()->input('page', 1) - 1) * $regionalStocks->perPage());
     }
 
     /**
@@ -32,7 +33,8 @@ class RegionalStockBogotaController extends Controller
     {
         $regionalStock = new RegionalStock();
         $products = Product::pluck('product','id');
-        return view('regional-stock.regional-bogota.create', compact('regionalStock','products'));
+        $regionals = Regional::pluck('regional','id');
+        return view('regional-stock.create', compact('regionalStock','products','regionals'));
     }
 
     /**
@@ -42,20 +44,13 @@ class RegionalStockBogotaController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {   
+    {
+        request()->validate(RegionalStock::$rules);
 
-            request()->validate(RegionalStock::$rules);
+        $regionalStock = RegionalStock::create($request->all());
 
-            $existente = RegionalStock::where('products_id', $request->products_id)->exists();
-
-            if ($existente) {
-                return redirect()->back()->with('error', 'Ese artículo ya está creado')->withInput();
-            }else{
-                $regionalStock = RegionalStock::create($request->all());
-                $this->updateState($request->products_id, $request->stock);
-            }
-
-            return redirect()->route('regional-bogota.index')->with('success', 'Se actualizó el registro');
+        return redirect()->route('regional-stocks.index')
+            ->with('success', 'RegionalStock created successfully.');
     }
 
     /**
@@ -84,27 +79,15 @@ class RegionalStockBogotaController extends Controller
         return view('regional-stock.regional-bogota.edit', compact('regionalStock','products'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request $request
-     * @param  RegionalStock $regionalStock
-     * @return \Illuminate\Http\Response
-     */
+    
     public function update(Request $request, RegionalStock $regionalStock)
     {
         request()->validate(RegionalStock::$rules);
 
-        $existente = RegionalStock::where('products_id', $request->products_id)->exists();
+        $regionalStock->update($request->all());
 
-        if ($existente) {
-            return redirect()->back()->with('error', 'Ese artículo ya está creado')->withInput();
-        }else{
-            $regionalStock->update($request->all());
-            $this->updateState($request->products_id, $request->stock);
-            return redirect()->route('regional-bogota.index')->with('success', 'Se actualizó el registro');
-        }
-        
+        return redirect()->route('regional-bogota.index')
+            ->with('success', 'RegionalStock updated successfully');
     }
 
     /**
@@ -116,24 +99,7 @@ class RegionalStockBogotaController extends Controller
     {
         $regionalStock = RegionalStock::find($id)->delete();
 
-        return redirect()->route('regional-bogota.index')
+        return redirect()->route('regional-stocks.index')
             ->with('success', 'RegionalStock deleted successfully');
-    }
-
-
-
-    public function updateState($id, $stock){
-        $product = Product::find($id);
-        $minimum = $product->minimum_stock;
-        if($stock > $minimum){
-            $status = "Altas";
-        }elseif ($stock == 0 ) {
-            $status = "Cero";
-        }else{
-            $status = "bajas";
-        }
-
-        $product->state = $status;
-        $product->save();
     }
 }

@@ -1,32 +1,26 @@
 @extends('layouts.app')
 @section('content')
-    <div class="container-fluid">
+<div class="container">
         <div class="row">
             <div class="col-sm-12">
-                <div class="card">
-                    <div class="card-header">
-                        <div style="display: flex; justify-content: space-between; align-items: center;">
-
-                            <span id="card_title">
-                                Inventario de Bogotá
-                            </span>
-
-                             <div class="float-right">
-                                <a href="{{ route('regional-bogota.create') }}" class="btn btn-primary btn-sm float-right"  data-placement="left">
-                                  {{ __('Create New') }}
-                                </a>
-                              </div>
+                <div>
+                    <div>
+                        <h1 class="text-center">Inventario Regional Bogotá</h1>                             
+                        <div class="my-4">
+                            <a href="" class="btn btn-secondary"><i class="fa fa-fw fa-arrow-left"></i> Volver</a>
+                            <a href="{{ route('regional-bogota.create') }}" class="btn btn-success"><i class="fa fa-fw fa-plus"></i> Agregar</a>
                         </div>
                     </div>
+
                     @if ($message = Session::get('success'))
                         <div class="alert alert-success">
                             <p>{{ $message }}</p>
                         </div>
                     @endif
 
-                    <div class="card-body">
+                    <div>
                         <div class="table-responsive">
-                            <table class="table table-striped table-hover">
+                            <table class="table table-striped table-hover text-center">
                                 <thead class="thead">
                                     <tr>
                                         <th>N°</th>
@@ -46,7 +40,7 @@
                                 </thead>
                                 <tbody>
                                     @foreach ($regionalStocks as $regionalStock)
-                                        <tr>
+                                        <tr >
                                             <td>{{ $regionalStock->Product->id }}</td>
                                             <td>{{ $regionalStock->Product->Category->category }}</td>
 											<td>{{ $regionalStock->Product->product }}</td>
@@ -56,11 +50,24 @@
 											<td>{{ $regionalStock->intputs }}</td>
 											<td>{{ $regionalStock->outputs }}</td>
 											<td>{{ $regionalStock->stock }}</td>
-                                            <td>{{ $regionalStock->Product->state }}</td>
+                                            <td>
+                                                @switch($regionalStock->Product->state)
+                                                    @case("Altas")
+                                                        <span class="btn btn-success">Existencias Altas</span>
+                                                        @break
+
+                                                    @case("Bajas")
+                                                        <span class="btn btn-warning">Existencias Bajas</span>
+                                                        @break
+                                                    @case("Cero")
+                                                        <span class="btn btn-danger">Sin Existencias</span>
+                                                        @break
+                                                @endswitch
+                                            </td>
 
                                             <td>
                                                 <form action="{{ route('regional-bogota.destroy',$regionalStock->id) }}" method="POST">
-                                                    <a class="btn btn-sm btn-warning" href="{{ route('regional-bogota.edit',$regionalStock->id) }}" title="Editar"><i class="fa fa-fw fa-edit"></i></a>
+                                                    <a class="btn btn-sm btn-success" href="{{ route('regional-bogota.edit',$regionalStock->id) }}"><i class="fa fa-fw fa-edit"></i> {{ __('Edit') }}</a>
                                                     @csrf
                                                     @method('DELETE')
                                                     <button type="submit" class="btn btn-danger btn-sm" title="Eliminar"><i class="fa fa-fw fa-trash"></i></button>

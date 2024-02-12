@@ -5,12 +5,11 @@ namespace App\Http\Controllers;
 use App\Models\RegionalStock;
 use Illuminate\Http\Request;
 use App\Models\Product;
-use App\Models\Regional;
 /**
- * Class RegionalStockController
+ * Class RegionalStockMedellinController
  * @package App\Http\Controllers
  */
-class RegionalStockController extends Controller
+class RegionalStockMedellinController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -21,7 +20,7 @@ class RegionalStockController extends Controller
     {
         $regionalStocks = RegionalStock::paginate();
 
-        return view('regional-stock.index', compact('regionalStocks'))
+        return view('regional-stock.regional-medellin.index', compact('regionalStocks'))
             ->with('i', (request()->input('page', 1) - 1) * $regionalStocks->perPage());
     }
 
@@ -34,8 +33,7 @@ class RegionalStockController extends Controller
     {
         $regionalStock = new RegionalStock();
         $products = Product::pluck('product','id');
-        $regionals = Regional::pluck('regional','id');
-        return view('regional-stock.create', compact('regionalStock','products','regionals'));
+        return view('regional-stock.regional-medellin.create', compact('regionalStock','products'));
     }
 
     /**
@@ -50,7 +48,7 @@ class RegionalStockController extends Controller
 
         $regionalStock = RegionalStock::create($request->all());
 
-        return redirect()->route('regional-stocks.index')
+        return redirect()->route('regional-medellin.index')
             ->with('success', 'RegionalStock created successfully.');
     }
 
@@ -64,7 +62,7 @@ class RegionalStockController extends Controller
     {
         $regionalStock = RegionalStock::find($id);
 
-        return view('regional-stock.show', compact('regionalStock'));
+        return view('regional-stock.regional-medellin.show', compact('regionalStock'));
     }
 
     /**
@@ -77,8 +75,7 @@ class RegionalStockController extends Controller
     {
         $regionalStock = RegionalStock::find($id);
         $products = Product::pluck('product','id');
-        $regionals = Regional::pluck('regional','id');
-        return view('regional-stock.edit', compact('regionalStock','products','regionals'));
+        return view('regional-stock.regional-medellin.edit', compact('regionalStock','products'));
     }
 
     /**
@@ -94,7 +91,7 @@ class RegionalStockController extends Controller
 
         $regionalStock->update($request->all());
 
-        return redirect()->route('regional-stocks.index')
+        return redirect()->route('regional-medellin.index')
             ->with('success', 'RegionalStock updated successfully');
     }
 
@@ -107,7 +104,7 @@ class RegionalStockController extends Controller
     {
         $regionalStock = RegionalStock::find($id)->delete();
 
-        return redirect()->route('regional-stocks.index')
+        return redirect()->route('regional-medellin.index')
             ->with('success', 'RegionalStock deleted successfully');
     }
 }

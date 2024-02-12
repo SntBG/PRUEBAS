@@ -11,7 +11,7 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProductsInputController;
 use App\Http\Controllers\ProductsOutputController;
 use App\Http\Controllers\RegionalStockBogotaController;
-use App\Http\Controllers\RegionalStockController;
+use App\Http\Controllers\RegionalStockMedellinController;
 use App\Http\Controllers\SupplierController;
 
 
@@ -45,5 +45,5 @@ Route::resource('products', ProductController::class);
 Route::resource('products-inputs', ProductsInputController::class);
 Route::resource('products-outputs', ProductsOutputController::class);
 Route::resource('regional-bogota', RegionalStockBogotaController::class);
-Route::resource('regional-stocks', RegionalStockController::class);
+Route::resource('regional-medellin', RegionalStockMedellinController::class);
 Route::resource('suppliers', SupplierController::class);

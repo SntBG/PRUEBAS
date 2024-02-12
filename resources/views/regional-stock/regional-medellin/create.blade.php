@@ -16,10 +16,10 @@
                         <span class="card-title">Creación Stock de Bogotá</span>
                     </div>
                     <div class="card-body">
-                        <form method="POST" action="{{ route('regional-stocks.store') }}"  role="form" enctype="multipart/form-data">
+                        <form method="POST" action="{{ route('regional-medellin.store') }}"  role="form" enctype="multipart/form-data">
                             @csrf
 
-                            @include('regional-stock.form')
+                            @include('regional-stock.regional-medellin.form')
 
                         </form>
                     </div>

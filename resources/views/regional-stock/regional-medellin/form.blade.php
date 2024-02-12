@@ -22,8 +22,8 @@
             {!! $errors->first('stock', '<div class="invalid-feedback">:message</div>') !!}
         </div>
         <div class="form-group">
-            {{ Form::label('regionals_id') }}
-            {{ Form::select('regionals_id', $regionals, $regionalStock->regionals_id, ['class' => 'form-control' . ($errors->has('regionals_id') ? ' is-invalid' : ''), 'placeholder' => 'Regionals Id']) }}
+            {{ Form::label('regional') }}
+            {{ Form::text('regional', $regionalStock->regional, ['class' => 'form-control', 'placeholder' => 'Regionals Id']) }}
             {!! $errors->first('regionals_id', '<div class="invalid-feedback">:message</div>') !!}
         </div>
 

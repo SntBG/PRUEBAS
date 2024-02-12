@@ -5,17 +5,17 @@
 @endsection
 
 @section('content')
-<section class="container">
-        <div class="row">
+    <section class="content container-fluid">
+        <div class="">
             <div class="col-md-12">
 
                 @includeif('partials.errors')
 
-                <div>
-                    <div>
-                        <h1 class="text-center">Actualizar inventario de Bogotá</h1>
+                <div class="card card-default">
+                    <div class="card-header">
+                        <span class="card-title">{{ __('Update') }} Regional Stockm Bogota</span>
                     </div>
-                    <div>
+                    <div class="card-body">
                         <form method="POST" action="{{ route('regional-bogota.update', $regionalStock->id) }}"  role="form" enctype="multipart/form-data">
                             {{ method_field('PATCH') }}
                             @csrf

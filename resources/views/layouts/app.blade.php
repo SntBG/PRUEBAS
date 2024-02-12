@@ -53,7 +53,7 @@
                                 <li><a class="dropdown-item" href="{{ route('products-inputs.index')}}">Entrada de productos</a></li>
                                 <li><a class="dropdown-item" href="{{ route('products-outputs.index')}}">Salida de productos</a></li>
                                 <li><a class="dropdown-item" href="{{ route('regional-bogota.index')}}">Regional Bogota</a></li>
-                                <li><a class="dropdown-item" href="{{ route('regional-stocks.index')}}">Inventario de regionales</a></li>
+                                <li><a class="dropdown-item" href="{{ route('regional-medellin.index')}}">Inventario de Medellin</a></li>
                                 <li><a class="dropdown-item" href="{{ route('suppliers.index')}}">Proveedores</a></li>
                                 
                                 
